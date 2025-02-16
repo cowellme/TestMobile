@@ -12,6 +12,7 @@
         {
             return new List<Dot>
             {
+                new Dot { Code = "011224354", Name = @"Тарный", Latitude = 55.637922, Longitude = 37.629081 },
                 new Dot { Code = "000000416", Name = @"Краснознаменск", Latitude = 55.594510, Longitude = 37.044323 },
                 new Dot { Code = "000000416", Name = @"г Москва, микрорайон Северное Чертаново, д 4 к 402 + ГБУ Эважд", Latitude = 55.637535, Longitude = 37.594921 },
 new Dot { Code = "000000621", Name = @"г Москва, ул Вавилова, д 2 (ООО ПИРС ФМ)", Latitude = 55.709618, Longitude = 37.592025 },

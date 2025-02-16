@@ -39,7 +39,7 @@ namespace MobileServer.DataBase
                 try
                 {
 
-                    HttpResponseMessage response = client.PatchAsync("http://45.93.201.79/Data", content).Result; // отправляем запрос
+                    HttpResponseMessage response = client.PatchAsync("http://77.50.192.67:3306/Data", content).Result; // отправляем запрос
 
                     if (response.StatusCode.ToString() == "OK")
                     {
@@ -69,7 +69,7 @@ namespace MobileServer.DataBase
 
     public sealed class ApplicationContext : DbContext
     {
-        private string _connectoinString = "server=92.63.177.70;uid=user;pwd=1590;database=kbp;";
+        private string _connectoinString = "server=77.50.192.67:3306;uid=user;pwd=1590;database=kbp;";
         public DbSet<Item> Items { get; set; } = null!;
 
         public ApplicationContext(bool reset = false)

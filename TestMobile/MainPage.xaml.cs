@@ -50,7 +50,20 @@ namespace TestMobile
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                Navigation.PushAsync(new Telemetry(value));
+                var telemetry = new Telemetry(value);
+
+                var count = 0;
+
+                while (!telemetry.IsWork)
+                {
+                    Thread.Sleep(1);
+                    count++;
+                    if (count == 1000)
+                        break;
+                }
+
+                if (telemetry.IsWork)
+                    Navigation.PushAsync(telemetry);
             });
         }
 

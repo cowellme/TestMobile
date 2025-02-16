@@ -1,6 +1,7 @@
 using KbpApi.Models;
 using MobileServer.DataBase;
 using System;
+using Button = Microsoft.Maui.Controls.Button;
 
 namespace TestMobile;
 
@@ -12,24 +13,38 @@ public partial class Telemetry : ContentPage
 
     private static string _codeDot = "";
     private static string _adress = "";
+    public bool IsWork { get; set; } = false;
 
     public Telemetry(string value)
     {
         InitializeComponent();
         _valueQre = value;
         SaveButton.IsEnabled = false;
-        GetCachedLocation();
-        
+        if (GetCachedLocation() != null)
+        {
+            IsWork = true;
+        }
+        else
+        {
+            MainPage.IsDetect = false;
+        }
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        MainPage.IsDetect = false;
+        Shell.Current.Navigation.PopToRootAsync();
+        return base.OnBackButtonPressed();
     }
 
 
-    public void GetCachedLocation()
+    public string? GetCachedLocation()
     {
         try
         {
             Location? location = Geolocation.Default.GetLastKnownLocationAsync().Result;
 
-            if (location == null) throw new Exception();
+            if (location == null) return null;
 
             _latitude = location.Latitude;
             _longitude = location.Longitude;
@@ -46,16 +61,18 @@ public partial class Telemetry : ContentPage
 
             if (dots.Count > 0)
             {
+                
                 foreach (var dot in dots.ToList())
                 {
                     var button = new Button { Text = dot.Name, Margin = new Thickness(0,0,0,10)};
                     button.Clicked += ButtonDots_Clicked;
-                    StackLayoutDots.Add(button);
+                    StackLayoutDots.Children.Add(button);
                 }
+
             }
 
-            
 
+            return "OK";
         }
         catch (FeatureNotSupportedException fnsEx)
         {
@@ -74,6 +91,7 @@ public partial class Telemetry : ContentPage
             // Unable to get location
         }
 
+        return null;
     }
 
     private void ButtonDots_Clicked(object? sender, EventArgs e)
@@ -101,13 +119,21 @@ public partial class Telemetry : ContentPage
     public static List<Dot> Start(Item item)
     {
         var dots = Dot.GetAll();
-        
+
         foreach (var dot in dots.ToList())
         {
             if (Formul(dot, item)) continue;
 
             dots.Remove(dot);
         }
+
+        //List<Dot> response = new List<Dot>();
+
+        //for (int i = 0; i < 20; i++)
+        //{
+        //    var dot = dots[i];
+        //    response.Add(dot);
+        //}
 
         return dots;
     }

@@ -3,18 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestMobile.Telemetry"
              Title="Telemetry">
-    <VerticalStackLayout
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+    <ScrollView>
+        <VerticalStackLayout
         Padding="30,0"
         Spacing="25">
 
-        <Label
+            <Shell.BackButtonBehavior>
+                <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+            </Shell.BackButtonBehavior>
+
+            <Label
             x:Name="LocationLabel"
             Text="Локация"
             Style="{StaticResource Headline}"
             SemanticProperties.HeadingLevel="Level1" />
-        <VerticalStackLayout
+            <VerticalStackLayout
             x:Name="StackLayoutDots"/>
-        <Button
+            <Button
             x:Name="SaveButton"
             Text="Сохранить и назад" 
             SemanticProperties.Hint="Counts the number of times you click"
@@ -22,5 +30,6 @@
             FontSize="23"
             Clicked="SaveButton_OnClicked"/>
 
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
